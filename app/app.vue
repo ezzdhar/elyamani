@@ -60,8 +60,8 @@ useHead({
   link: [
     { rel: 'icon', type: 'image/x-icon', href: withBase('favicon.ico') },
     { rel: 'shortcut icon', href: withBase('favicon.ico') },
-    { rel: 'icon', type: 'image/png', href: withBase('images/logo-icon.png') },
-    { rel: 'apple-touch-icon', href: withBase('images/logo-icon.png') }
+    { rel: 'icon', type: 'image/png', sizes: '32x32', href: withBase('favicon-32x32.png') },
+    { rel: 'apple-touch-icon', href: withBase('apple-touch-icon.png') }
   ],
   script: [
     {
