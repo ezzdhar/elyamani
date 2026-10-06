@@ -25,7 +25,7 @@
           <!-- Social Icons (#82:15014) -->
           <div class="app-footer__socials" aria-label="Social media profiles">
             <a
-              href="https://tr.ee/3czF4jiPUJ"
+              href="https://www.facebook.com/profile.php?id=61594554461085"
               target="_blank"
               rel="noopener noreferrer"
               class="app-footer__social-btn"
@@ -34,7 +34,7 @@
               <img src="/images/icon-facebook.svg" alt="" aria-hidden="true" width="12" height="24" />
             </a>
             <a
-              href="https://tr.ee/XwWe2OLg9l"
+              href="https://www.instagram.com/elyamani.2"
               target="_blank"
               rel="noopener noreferrer"
               class="app-footer__social-btn"
@@ -43,7 +43,7 @@
               <img src="/images/icon-instagram.svg" alt="" aria-hidden="true" width="22" height="22" />
             </a>
             <a
-              href="https://tr.ee/Z8tGBFznnT"
+              href="https://www.tiktok.com/@elyamanicfd"
               target="_blank"
               rel="noopener noreferrer"
               class="app-footer__social-btn"
@@ -86,13 +86,13 @@
             </p>
             <p class="app-footer__contact-text">
               <a
-                href="https://tr.ee/6FElYLbL6o"
+                href="https://api.whatsapp.com/send?phone=201090099517"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="app-footer__link"
-                aria-label="Contact us on WhatsApp: +20 10 000 0000"
+                aria-label="Contact us on WhatsApp: +201090099517"
               >
-                +20 10 000 0000
+                +201090099517
               </a>
             </p>
           </address>
