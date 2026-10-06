@@ -3,7 +3,7 @@
     <div class="container contact-section__container">
       <div class="contact-section__grid">
         <!-- Left Column: Info & Architectural Polygon -->
-        <div class="contact-section__info">
+        <div class="contact-section__info reveal-on-scroll reveal-on-scroll--left">
           <SectionBadge color="terracotta">CONTACT US</SectionBadge>
 
           <h2 class="contact-section__title">
@@ -33,7 +33,7 @@
         </div>
 
         <!-- Right Column: Contact Card (#82:14963, 531px width, 40px 80px padding in Figma) -->
-        <div class="contact-section__form-wrap">
+        <div class="contact-section__form-wrap reveal-on-scroll reveal-on-scroll--right reveal-delay-1">
           <div class="contact-card">
             <!-- Success Confirmation State -->
             <div
@@ -235,8 +235,15 @@ function validateField(field: keyof FormData): boolean {
   }
 
   if (field === 'phone') {
-    if (!form.phone.trim()) {
+    const raw = form.phone.trim()
+    if (!raw) {
       errors.phone = 'Phone number is required.'
+      return false
+    }
+    const cleanPhone = raw.replace(/[\s\-\(\)\.]/g, '')
+    const egyptianPhoneRegex = /^(?:\+20|0020|20)?0?1[0125]\d{8}$/
+    if (!egyptianPhoneRegex.test(cleanPhone)) {
+      errors.phone = 'Please enter a valid Egyptian phone number (e.g. 010 807 478 32).'
       return false
     }
   }

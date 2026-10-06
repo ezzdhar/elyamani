@@ -8,7 +8,7 @@
     <div class="container about-section__container">
       <div class="about-section__grid">
         <!-- Content Column (#23:301, width 486px in Figma) -->
-        <div class="about-section__content">
+        <div class="about-section__content reveal-on-scroll reveal-on-scroll--left">
           <SectionBadge color="terracotta">WHO WE ARE</SectionBadge>
           
           <h2 class="about-section__title">ABOUT US</h2>
@@ -31,7 +31,7 @@
         </div>
 
         <!-- Visual Showcase Column (#27:333, width 576px, height 533px in Figma) -->
-        <div class="about-section__visual">
+        <div class="about-section__visual reveal-on-scroll reveal-on-scroll--right reveal-delay-1">
           <div class="visual-wrapper">
             <!-- Main Arched Architecture Image (#26:325, 378x502, radius 24px) -->
             <img

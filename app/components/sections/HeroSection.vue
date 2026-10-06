@@ -17,7 +17,7 @@
     </div>
 
     <div class="container hero-section__container">
-      <div class="hero-section__content">
+      <div class="hero-section__content reveal-on-scroll">
         <!-- Disciplines Breadcrumb / Tag -->
         <div class="hero-section__disciplines" aria-label="Our Core Disciplines">
           <span class="discipline-tag">ARCHITECTURE</span>
@@ -66,7 +66,7 @@
       </div>
 
       <!-- Bottom Glassmorphic Feature Bar -->
-      <div class="hero-section__feature-bar" role="region" aria-label="Key Commitments">
+      <div class="hero-section__feature-bar reveal-on-scroll reveal-delay-2" role="region" aria-label="Key Commitments">
         <div class="feature-item">
           <img
             src="/images/icon-cube-alt.svg"

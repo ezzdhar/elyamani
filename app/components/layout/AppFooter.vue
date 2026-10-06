@@ -1,6 +1,6 @@
 <template>
   <footer class="app-footer" role="contentinfo">
-    <div class="container app-footer__container">
+    <div class="container app-footer__container reveal-on-scroll">
       <div class="app-footer__grid">
         <!-- Brand Column (#82:14969, width: 188px in Figma) -->
         <div class="app-footer__col app-footer__col--brand">
@@ -25,7 +25,7 @@
           <!-- Social Icons (#82:15014) -->
           <div class="app-footer__socials" aria-label="Social media profiles">
             <a
-              href="https://facebook.com"
+              href="https://tr.ee/3czF4jiPUJ"
               target="_blank"
               rel="noopener noreferrer"
               class="app-footer__social-btn"
@@ -34,7 +34,7 @@
               <img src="/images/icon-facebook.svg" alt="" aria-hidden="true" width="12" height="24" />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://tr.ee/XwWe2OLg9l"
               target="_blank"
               rel="noopener noreferrer"
               class="app-footer__social-btn"
@@ -43,7 +43,7 @@
               <img src="/images/icon-instagram.svg" alt="" aria-hidden="true" width="22" height="22" />
             </a>
             <a
-              href="https://tiktok.com"
+              href="https://tr.ee/Z8tGBFznnT"
               target="_blank"
               rel="noopener noreferrer"
               class="app-footer__social-btn"
@@ -85,7 +85,15 @@
               <a href="mailto:Info@Elymani.Com" class="app-footer__link">Info@Elymani.Com</a>
             </p>
             <p class="app-footer__contact-text">
-              <a href="tel:+20100000000" class="app-footer__link">+20 10 000 0000</a>
+              <a
+                href="https://tr.ee/6FElYLbL6o"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="app-footer__link"
+                aria-label="Contact us on WhatsApp: +20 10 000 0000"
+              >
+                +20 10 000 0000
+              </a>
             </p>
           </address>
         </div>

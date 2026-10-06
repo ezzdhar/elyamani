@@ -8,7 +8,7 @@
     <div class="container services-section__container">
       <div class="services-section__grid">
         <!-- 4-Photo Architectural Collage (#63:89, 612x572 in Figma) -->
-        <div class="services-section__gallery" role="region" aria-label="Architecture and Design Portfolio Highlights">
+        <div class="services-section__gallery reveal-on-scroll reveal-on-scroll--left" role="region" aria-label="Architecture and Design Portfolio Highlights">
           <picture>
             <source srcset="/images/services-collage.webp" type="image/webp" />
             <img
@@ -23,7 +23,7 @@
         </div>
 
         <!-- Content Column (#73:91, width 486px in Figma) -->
-        <div class="services-section__content">
+        <div class="services-section__content reveal-on-scroll reveal-on-scroll--right reveal-delay-1">
           <SectionBadge color="green">WHAT WE DO</SectionBadge>
 
           <h2 class="services-section__title">

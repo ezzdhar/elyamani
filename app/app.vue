@@ -25,7 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import { useHead, useSeoMeta } from '#imports'
+import { useHead, useSeoMeta, useRuntimeConfig } from '#imports'
+import { useScrollReveal } from '~/composables/useScrollReveal'
 import AppHeader from '~/components/layout/AppHeader.vue'
 import AppFooter from '~/components/layout/AppFooter.vue'
 import HeroSection from '~/components/sections/HeroSection.vue'
@@ -34,21 +35,34 @@ import ProcessSection from '~/components/sections/ProcessSection.vue'
 import ServicesSection from '~/components/sections/ServicesSection.vue'
 import ContactSection from '~/components/sections/ContactSection.vue'
 
+// Initialize smooth scroll reveal animations
+useScrollReveal()
+
+const config = useRuntimeConfig()
+const base = config.app.baseURL || '/'
+const withBase = (path: string) => `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`
+
 // Enhanced SEO Metadata
 useSeoMeta({
   title: 'ELYMANI | Architecture, Interior Design & Execution',
   ogTitle: 'ELYMANI | Architecture, Interior Design & Execution',
   description: 'ELYMANI brings architecture, interior design, and turnkey execution together under one integrated approach in New Damietta, Egypt.',
   ogDescription: 'Thoughtful spaces through integrated architecture, interior design, and execution. Turnkey solutions under one roof.',
-  ogImage: '/images/about-main.png',
+  ogImage: withBase('images/about-main.png'),
   twitterCard: 'summary_large_image',
   twitterTitle: 'ELYMANI | Architecture, Interior Design & Execution',
   twitterDescription: 'Thoughtful spaces through integrated architecture, interior design, and execution.',
-  twitterImage: '/images/about-main.png'
+  twitterImage: withBase('images/about-main.png')
 })
 
 // Structured JSON-LD Data for SEO
 useHead({
+  link: [
+    { rel: 'icon', type: 'image/x-icon', href: withBase('favicon.ico') },
+    { rel: 'shortcut icon', href: withBase('favicon.ico') },
+    { rel: 'icon', type: 'image/png', href: withBase('images/logo-icon.png') },
+    { rel: 'apple-touch-icon', href: withBase('images/logo-icon.png') }
+  ],
   script: [
     {
       type: 'application/ld+json',
@@ -77,9 +91,10 @@ useHead({
           }
         ],
         sameAs: [
-          'https://facebook.com',
-          'https://instagram.com',
-          'https://tiktok.com'
+          'https://tr.ee/3czF4jiPUJ',
+          'https://tr.ee/XwWe2OLg9l',
+          'https://tr.ee/Z8tGBFznnT',
+          'https://tr.ee/6FElYLbL6o'
         ],
         hasOfferCatalog: {
           '@type': 'OfferCatalog',

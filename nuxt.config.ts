@@ -1,3 +1,6 @@
+const baseURL = process.env.NUXT_APP_BASE_URL || (process.env.GITHUB_ACTIONS ? '/elyamani/' : '/')
+const cleanBase = baseURL.endsWith('/') ? baseURL : `${baseURL}/`
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -13,7 +16,7 @@ export default defineNuxtConfig({
   ],
 
   app: {
-    baseURL: process.env.NUXT_APP_BASE_URL || (process.env.GITHUB_ACTIONS ? '/elyamani/' : '/'),
+    baseURL: cleanBase,
     head: {
       htmlAttrs: {
         lang: 'en',
@@ -36,17 +39,20 @@ export default defineNuxtConfig({
           property: 'og:description',
           content: 'Thoughtful spaces through integrated architecture, interior design, and execution. Turnkey solutions under one roof.'
         },
-        { property: 'og:image', content: '/images/about-main.png' },
+        { property: 'og:image', content: `${cleanBase}images/about-main.png` },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'ELYMANI | Architecture, Interior Design & Execution' },
         {
           name: 'twitter:description',
           content: 'Thoughtful spaces through integrated architecture, interior design, and execution.'
         },
-        { name: 'twitter:image', content: '/images/about-main.png' }
+        { name: 'twitter:image', content: `${cleanBase}images/about-main.png` }
       ],
       link: [
-        { rel: 'icon', type: 'image/png', href: '/images/logo-icon.png' },
+        { rel: 'icon', type: 'image/x-icon', href: `${cleanBase}favicon.ico` },
+        { rel: 'shortcut icon', href: `${cleanBase}favicon.ico` },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${cleanBase}images/logo-icon.png` },
+        { rel: 'apple-touch-icon', href: `${cleanBase}images/logo-icon.png` },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {

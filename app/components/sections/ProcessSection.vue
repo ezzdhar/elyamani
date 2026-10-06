@@ -7,7 +7,7 @@
 
     <div class="container process-section__container">
       <!-- Section Header (#34:343) -->
-      <div class="process-section__header">
+      <div class="process-section__header reveal-on-scroll">
         <SectionBadge color="terracotta">WHO WE ARE</SectionBadge>
         
         <h2 class="process-section__title">
@@ -27,9 +27,10 @@
         <article
           v-for="(card, index) in processSteps"
           :key="index"
-          class="process-card"
+          :class="['process-card', 'reveal-on-scroll', `reveal-delay-${index + 1}`]"
+          tabindex="0"
         >
-          <!-- Image 250px height, radius 16px -->
+          <!-- Image 250px height, radius 16px with hover overlay -->
           <div class="process-card__image-wrap">
             <img
               :src="getImageUrl(card.image)"
@@ -39,6 +40,9 @@
               width="380"
               height="250"
             />
+            <div class="process-card__overlay" aria-hidden="true">
+              <span class="process-card__overlay-title">{{ card.title }}</span>
+            </div>
           </div>
 
           <!-- Description max-width 328px, color #422517 -->
@@ -66,16 +70,19 @@ function getImageUrl(path: string) {
 
 const processSteps = [
   {
+    title: '01 DESIGN',
     image: '/images/process-1.png',
     alt: 'Concept drafting and architectural plans by ELYMANI',
     description: 'We translate your vision into thoughtful architectural and interior concepts — every detail considered before we build.'
   },
   {
+    title: '02 EXECUTE',
     image: '/images/process-2.png',
     alt: 'On-site construction supervision and engineering',
     description: 'We bring the design to life through precise construction and hands-on site supervision, every step of the way.'
   },
   {
+    title: '03 DELIVERY',
     image: '/images/process-3.png',
     alt: 'Luxury turnkey architectural delivery and final handover',
     description: 'We stay accountable to quality and detail until the final handover — because delivery is part of the design.'
@@ -88,7 +95,7 @@ const processSteps = [
   position: relative;
   background-color: var(--color-cream-active); /* #FEFAF2 */
   color: var(--color-card-darker);
-  padding: 120px 0;
+  padding: clamp(72px, 8vw, 116px) 0 clamp(64px, 7vw, 96px);
   overflow: hidden;
 }
 
@@ -96,13 +103,13 @@ const processSteps = [
 .process-section__watermark {
   position: absolute;
   left: 50%;
-  top: 40px;
+  top: clamp(-220px, -13.5vw, -130px);
   transform: translateX(-50%);
-  width: 1250px;
-  height: 1250px;
+  width: clamp(920px, 88vw, 2500px);
+  height: clamp(920px, 88vw, 2500px);
   pointer-events: none;
   background-color: #B89974;
-  opacity: 0.18;
+  opacity: 0.16;
   -webkit-mask-image: url('/images/watermark-pattern.png');
   mask-image: url('/images/watermark-pattern.png');
   -webkit-mask-size: contain;
@@ -132,19 +139,23 @@ const processSteps = [
 
 @media (max-width: 1024px) {
   .process-section__watermark {
-    width: 900px;
-    height: 900px;
-    top: 60px;
-    opacity: 0.15;
+    width: 118vw;
+    height: 118vw;
+    min-width: 780px;
+    min-height: 780px;
+    top: -150px;
+    opacity: 0.14;
   }
 }
 
 @media (max-width: 640px) {
   .process-section__watermark {
-    width: 600px;
-    height: 600px;
-    top: 40px;
-    opacity: 0.12;
+    width: 150vw;
+    height: 150vw;
+    min-width: 560px;
+    min-height: 560px;
+    top: -64px;
+    opacity: 0.11;
   }
 }
 
@@ -153,7 +164,7 @@ const processSteps = [
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: clamp(46px, 5vw, 74px);
 }
 
 /* Header (#34:343) */
@@ -164,39 +175,38 @@ const processSteps = [
   text-align: center;
   max-width: 680px;
   margin: 0 auto;
-  gap: 18px;
+  gap: 16px;
 }
 
 .process-section__title {
   display: flex;
   flex-direction: column;
   font-family: var(--font-heading);
-  font-size: 2.25rem;
+  font-size: clamp(2.1rem, 4.8vw, 4rem);
   line-height: 1.25;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-green-primary);
   letter-spacing: 0.02em;
 }
 
 @media (min-width: 768px) {
   .process-section__title {
-    font-size: 48px;
-    line-height: 60px;
+    line-height: 1.28;
   }
 }
 
 .process-section__subtitle {
   font-family: var(--font-sans);
-  font-size: 1.125rem;
+  font-size: clamp(1.05rem, 2vw, 1.75rem);
   line-height: 1.55;
   font-weight: 500;
   color: #494139; /* Foundation /sec back/Darker */
+  max-width: 760px;
 }
 
 @media (min-width: 768px) {
   .process-section__subtitle {
-    font-size: 24px;
-    line-height: 36px;
+    line-height: 1.5;
   }
 }
 
@@ -215,7 +225,7 @@ const processSteps = [
 @media (min-width: 768px) {
   .process-section__grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
+    gap: clamp(28px, 4vw, 74px);
   }
 }
 
@@ -230,12 +240,22 @@ const processSteps = [
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
+  cursor: pointer;
+  border-radius: 16px;
+  outline: none;
+}
+
+.process-card:focus-visible {
+  outline: 2px solid var(--color-green-primary);
+  outline-offset: 4px;
 }
 
 .process-card__image-wrap {
+  position: relative;
   width: 100%;
-  height: 250px;
+  aspect-ratio: 1.4 / 1;
+  height: auto;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
@@ -248,8 +268,48 @@ const processSteps = [
   transition: transform var(--transition-slow);
 }
 
-.process-card:hover .process-card__image {
+.process-card:hover .process-card__image,
+.process-card:focus-visible .process-card__image {
   transform: scale(1.04);
+}
+
+/* Hover Overlay (#Frame 57, 58, 59 in Figma) */
+.process-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(20, 49, 53, 0.72);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+.process-card__overlay-title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-cream);
+  text-align: center;
+  padding: 0 16px;
+  transform: translateY(6px);
+  transition: transform var(--transition-base);
+}
+
+.process-card:hover .process-card__overlay,
+.process-card:focus-within .process-card__overlay,
+.process-card:focus-visible .process-card__overlay {
+  opacity: 1;
+}
+
+.process-card:hover .process-card__overlay-title,
+.process-card:focus-within .process-card__overlay-title,
+.process-card:focus-visible .process-card__overlay-title {
+  transform: translateY(0);
 }
 
 /* Body (#52:62, width: 328px) */
