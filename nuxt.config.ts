@@ -49,6 +49,7 @@ export default defineNuxtConfig({
         { name: 'twitter:image', content: `${cleanBase}images/about-main.png` }
       ],
       link: [
+        { rel: 'preload', as: 'image', href: `${cleanBase}images/hero-bg-exact.webp`, type: 'image/webp', fetchpriority: 'high' },
         { rel: 'icon', type: 'image/x-icon', href: `${cleanBase}favicon.ico` },
         { rel: 'shortcut icon', href: `${cleanBase}favicon.ico` },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${cleanBase}favicon-32x32.png` },

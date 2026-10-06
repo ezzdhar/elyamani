@@ -3,13 +3,17 @@
     <!-- Hero Background Image (Exact framing from Figma) -->
     <div class="hero-section__bg-wrap" aria-hidden="true">
       <picture>
-        <source srcset="/images/hero-bg-exact.webp" type="image/webp" />
+        <source :srcset="withBase('images/hero-bg-exact.webp')" type="image/webp" />
         <img
-          src="/images/hero-bg-exact.png"
+          ref="heroImgRef"
+          :src="withBase('images/hero-bg-exact.png')"
           alt=""
           class="hero-section__bg-img"
+          :class="{ 'is-loaded': !isLoading }"
           fetchpriority="high"
           loading="eager"
+          @load="handleImageLoad"
+          @error="handleImageLoad"
         />
       </picture>
       <!-- Atmospheric overlay with sharp background & gentle bottom fade into next section -->
@@ -119,6 +123,7 @@
 
 <script setup lang="ts">
 import AppButton from '~/components/ui/AppButton.vue'
+import { withBase } from '~/utils/asset'
 </script>
 
 <style scoped>

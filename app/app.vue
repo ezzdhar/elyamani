@@ -1,5 +1,8 @@
 <template>
   <div class="app-layout">
+    <!-- Whole-website luxury brand preloader on load/refresh -->
+    <AppPreloader />
+
     <NuxtRouteAnnouncer />
     
     <!-- Accessibility Skip Link -->
@@ -27,6 +30,7 @@
 <script setup lang="ts">
 import { useHead, useSeoMeta, useRuntimeConfig } from '#imports'
 import { useScrollReveal } from '~/composables/useScrollReveal'
+import AppPreloader from '~/components/ui/AppPreloader.vue'
 import AppHeader from '~/components/layout/AppHeader.vue'
 import AppFooter from '~/components/layout/AppFooter.vue'
 import HeroSection from '~/components/sections/HeroSection.vue'
