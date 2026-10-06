@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   ],
 
   app: {
+    baseURL: process.env.NUXT_APP_BASE_URL || (process.env.GITHUB_ACTIONS ? '/elyamani/' : '/'),
     head: {
       htmlAttrs: {
         lang: 'en',

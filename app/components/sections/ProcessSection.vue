@@ -32,7 +32,7 @@
           <!-- Image 250px height, radius 16px -->
           <div class="process-card__image-wrap">
             <img
-              :src="card.image"
+              :src="getImageUrl(card.image)"
               :alt="card.alt"
               class="process-card__image"
               loading="lazy"
@@ -53,6 +53,16 @@
 
 <script setup lang="ts">
 import SectionBadge from '~/components/ui/SectionBadge.vue'
+
+const { app: { baseURL } } = useRuntimeConfig()
+
+function getImageUrl(path: string) {
+  if (!path) return ''
+  if (path.startsWith('http')) return path
+  const cleanBase = (baseURL || '/').endsWith('/') ? (baseURL || '/') : `${baseURL}/`
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path
+  return `${cleanBase}${cleanPath}`
+}
 
 const processSteps = [
   {
