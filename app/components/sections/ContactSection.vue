@@ -48,9 +48,9 @@
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
               </div>
-              <h3 class="success-title">Thank You!</h3>
+              <h3 class="success-title">{{ t.contact.form.success.title }}</h3>
               <p class="success-desc">
-                Your project inquiry has been received. Our architecture and execution team will review your details and contact you shortly.
+                {{ t.contact.form.success.desc }}
               </p>
               <AppButton
                 variant="primary"
@@ -58,7 +58,7 @@
                 :show-arrow="false"
                 @click="resetForm"
               >
-                Send Another Inquiry
+                {{ t.contact.form.success.sendAnother }}
               </AppButton>
             </div>
 
@@ -188,7 +188,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import SectionBadge from '~/components/ui/SectionBadge.vue'
 import AppButton from '~/components/ui/AppButton.vue'
 import { useI18n } from '~/composables/useI18n'
@@ -213,7 +213,7 @@ const form = reactive<FormData>({
   projectDetails: ''
 })
 
-const errors = reactive<Record<string, string>>({
+const errorKeys = reactive<Record<string, string>>({
   firstName: '',
   lastName: '',
   phone: '',
@@ -221,50 +221,69 @@ const errors = reactive<Record<string, string>>({
   projectDetails: ''
 })
 
+const errors = computed<Record<string, string>>(() => {
+  const errMap: Record<string, string> = {
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    projectDetails: ''
+  }
+  const msgs = t.value.contact.form.errors
+  if (errorKeys.firstName === 'required') errMap.firstName = msgs.firstNameRequired
+  if (errorKeys.lastName === 'required') errMap.lastName = msgs.lastNameRequired
+  if (errorKeys.phone === 'required') errMap.phone = msgs.phoneRequired
+  if (errorKeys.phone === 'invalid') errMap.phone = msgs.phoneInvalid
+  if (errorKeys.email === 'required') errMap.email = msgs.emailRequired
+  if (errorKeys.email === 'invalid') errMap.email = msgs.emailInvalid
+  if (errorKeys.projectDetails === 'required') errMap.projectDetails = msgs.projectDetailsRequired
+  return errMap
+})
+
 const isLoading = ref(false)
 const isSubmitted = ref(false)
 
 function validateField(field: keyof FormData): boolean {
-  errors[field] = ''
+  errorKeys[field] = ''
 
   if (field === 'firstName' && !form.firstName.trim()) {
-    errors.firstName = 'First name is required.'
+    errorKeys.firstName = 'required'
     return false
   }
 
   if (field === 'lastName' && !form.lastName.trim()) {
-    errors.lastName = 'Last name is required.'
+    errorKeys.lastName = 'required'
     return false
   }
 
   if (field === 'phone') {
     const raw = form.phone.trim()
     if (!raw) {
-      errors.phone = 'Phone number is required.'
+      errorKeys.phone = 'required'
       return false
     }
     const cleanPhone = raw.replace(/[\s\-\(\)\.]/g, '')
     const egyptianPhoneRegex = /^(?:\+20|0020|20)?0?1[0125]\d{8}$/
     if (!egyptianPhoneRegex.test(cleanPhone)) {
-      errors.phone = 'Please enter a valid Egyptian phone number (e.g. 010 807 478 32).'
+      errorKeys.phone = 'invalid'
       return false
     }
   }
 
   if (field === 'email') {
     if (!form.email.trim()) {
-      errors.email = 'Email address is required.'
+      errorKeys.email = 'required'
       return false
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(form.email.trim())) {
-      errors.email = 'Please provide a valid email address.'
+      errorKeys.email = 'invalid'
       return false
     }
   }
 
   if (field === 'projectDetails' && !form.projectDetails.trim()) {
-    errors.projectDetails = 'Project details are required.'
+    errorKeys.projectDetails = 'required'
     return false
   }
 
@@ -296,6 +315,11 @@ function resetForm() {
   form.email = ''
   form.referral = 'Facebook , Instagram'
   form.projectDetails = ''
+  errorKeys.firstName = ''
+  errorKeys.lastName = ''
+  errorKeys.phone = ''
+  errorKeys.email = ''
+  errorKeys.projectDetails = ''
   isSubmitted.value = false
 }
 </script>

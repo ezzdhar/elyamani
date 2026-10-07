@@ -49,19 +49,22 @@
         </div>
       </div>
 
-      <!-- Mobile Hamburger Button -->
-      <button
-        type="button"
-        class="app-header__mobile-toggle"
-        :aria-expanded="isMobileMenuOpen"
-        aria-controls="mobile-navigation"
-        aria-label="Toggle Navigation Menu"
-        @click="isMobileMenuOpen = !isMobileMenuOpen"
-      >
-        <span class="hamburger-box">
-          <span :class="['hamburger-inner', { 'is-active': isMobileMenuOpen }]"></span>
-        </span>
-      </button>
+      <!-- Mobile Right Controls: Language Switcher + Hamburger -->
+      <div class="app-header__mobile-controls">
+        <LanguageToggle />
+        <button
+          type="button"
+          class="app-header__mobile-toggle"
+          :aria-expanded="isMobileMenuOpen"
+          aria-controls="mobile-navigation"
+          aria-label="Toggle Navigation Menu"
+          @click="isMobileMenuOpen = !isMobileMenuOpen"
+        >
+          <span class="hamburger-box">
+            <span :class="['hamburger-inner', { 'is-active': isMobileMenuOpen }]"></span>
+          </span>
+        </button>
+      </div>
     </div>
 
     <!-- Mobile Drawer -->
@@ -95,20 +98,17 @@
                   height="46"
                 />
               </NuxtLink>
-              <div class="app-header__mobile-header-actions">
-                <LanguageToggle />
-                <button
-                  type="button"
-                  class="app-header__mobile-close"
-                  aria-label="Close Navigation Menu"
-                  @click="isMobileMenuOpen = false"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
-              </div>
+              <button
+                type="button"
+                class="app-header__mobile-close"
+                aria-label="Close Navigation Menu"
+                @click="isMobileMenuOpen = false"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
             </div>
 
             <nav class="app-header__mobile-nav">
@@ -275,6 +275,12 @@ onUnmounted(() => {
   object-fit: contain;
 }
 
+@media (max-width: 576px) {
+  .app-header__logo {
+    height: 52px;
+  }
+}
+
 /* Desktop Right Cluster (Nav + CTA) */
 .app-header__right {
   display: none;
@@ -353,6 +359,19 @@ onUnmounted(() => {
   transform: none;
 }
 
+/* Mobile Controls */
+.app-header__mobile-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (min-width: 992px) {
+  .app-header__mobile-controls {
+    display: none;
+  }
+}
+
 /* Mobile Toggle */
 .app-header__mobile-toggle {
   display: flex;
@@ -363,12 +382,8 @@ onUnmounted(() => {
   color: var(--color-cream);
   border-radius: var(--radius-xs);
   cursor: pointer;
-}
-
-@media (min-width: 992px) {
-  .app-header__mobile-toggle {
-    display: none;
-  }
+  background: transparent;
+  border: none;
 }
 
 .hamburger-box {
@@ -456,15 +471,21 @@ onUnmounted(() => {
   border-bottom: 1px solid rgba(252, 239, 212, 0.1);
 }
 
-.app-header__mobile-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .app-header__mobile-close {
   color: var(--color-cream);
   padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-fast);
+}
+
+.app-header__mobile-close:hover {
+  opacity: 0.8;
 }
 
 .app-header__mobile-nav {

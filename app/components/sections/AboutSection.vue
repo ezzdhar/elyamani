@@ -289,7 +289,7 @@ const { t, isRtl } = useI18n()
 
 :global([dir="rtl"] .glass-card) {
   left: auto;
-  right: 0;
+  right: -200px;
 }
 
 @media (max-width: 640px) {

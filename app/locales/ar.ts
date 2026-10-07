@@ -78,13 +78,27 @@ export const ar = {
       emailPlaceholder: 'أدخل بريدك الإلكتروني',
       referral: 'كيف سمعت عنا؟',
       referralOption1: 'فيسبوك، إنستغرام',
-      referralOption2: 'Referral / Recommendation',
-      referralOption3: 'Google Search',
-      referralOption4: 'Previous Client',
-      referralOption5: 'Other',
+      referralOption2: 'ترشيح / توصية',
+      referralOption3: 'بحث جوجل',
+      referralOption4: 'عميل سابق',
+      referralOption5: 'أخرى',
       projectDetails: 'تفاصيل المشروع',
       projectDetailsPlaceholder: 'وصف المشروع',
-      submit: 'إرسال'
+      submit: 'إرسال',
+      errors: {
+        firstNameRequired: 'الاسم الأول مطلوب.',
+        lastNameRequired: 'اسم العائلة مطلوب.',
+        phoneRequired: 'رقم الهاتف مطلوب.',
+        phoneInvalid: 'يرجى إدخال رقم هاتف مصري صالح (مثال: 010 807 478 32).',
+        emailRequired: 'البريد الإلكتروني مطلوب.',
+        emailInvalid: 'يرجى إدخال بريد إلكتروني صالح.',
+        projectDetailsRequired: 'تفاصيل المشروع مطلوبة.'
+      },
+      success: {
+        title: 'شكراً لك!',
+        desc: 'تم استلام استفسار مشروعك بنجاح. سيقوم فريق التصميم المعماري والتنفيذ بمراجعة التفاصيل والتواصل معك قريباً.',
+        sendAnother: 'إرسال استفسار آخر'
+      }
     }
   },
   footer: {

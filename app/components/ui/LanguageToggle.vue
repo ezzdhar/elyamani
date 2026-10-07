@@ -101,4 +101,16 @@ const { isRtl, toggleLocale } = useI18n()
   color: rgba(252, 239, 212, 0.3);
   font-size: 11px;
 }
+
+@media (max-width: 480px) {
+  .lang-toggle-btn {
+    height: 38px;
+    padding: 0 10px;
+    gap: 6px;
+  }
+  .lang-toggle-btn__labels {
+    gap: 4px;
+    font-size: 12px;
+  }
+}
 </style>

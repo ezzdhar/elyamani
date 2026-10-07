@@ -84,7 +84,21 @@ export const en = {
       referralOption5: 'Other',
       projectDetails: 'Project details',
       projectDetailsPlaceholder: 'Project description',
-      submit: 'Submit'
+      submit: 'Submit',
+      errors: {
+        firstNameRequired: 'First name is required.',
+        lastNameRequired: 'Last name is required.',
+        phoneRequired: 'Phone number is required.',
+        phoneInvalid: 'Please enter a valid Egyptian phone number (e.g. 010 807 478 32).',
+        emailRequired: 'Email address is required.',
+        emailInvalid: 'Please provide a valid email address.',
+        projectDetailsRequired: 'Project details are required.'
+      },
+      success: {
+        title: 'Thank You!',
+        desc: 'Your project inquiry has been received. Our architecture and execution team will review your details and contact you shortly.',
+        sendAnother: 'Send Another Inquiry'
+      }
     }
   },
   footer: {

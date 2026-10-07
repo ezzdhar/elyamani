@@ -6,7 +6,7 @@
         <div class="app-footer__col app-footer__col--brand">
           <div class="app-footer__brand">
             <img
-              src="/images/footer-logo.png"
+              src="/images/logo-text.png"
               :alt="t.footer.brand"
               class="app-footer__logo"
               width="120"
@@ -146,11 +146,11 @@ const { t, isRtl } = useI18n()
 
 /* Brand */
 .app-footer__brand {
-  margin-bottom: 18px;
+  margin-bottom: 8px;
 }
 
 .app-footer__logo {
-  height: 38px;
+  height: 78px;
   width: auto;
   object-fit: contain;
 }
