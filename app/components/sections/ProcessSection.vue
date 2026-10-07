@@ -7,18 +7,18 @@
 
     <div class="container process-section__container">
       <!-- Section Header (#34:343) -->
-      <div class="process-section__header reveal-on-scroll">
-        <SectionBadge color="terracotta">WHO WE ARE</SectionBadge>
+      <div class="process-section__header">
+        <SectionBadge color="terracotta">{{ t.process.badge }}</SectionBadge>
         
         <h2 class="process-section__title">
-          <span>FROM VISION TO</span>
-          <span>REALITY</span>
+          <span>{{ t.process.titleLine1 }}</span>
+          <span>{{ t.process.titleLine2 }}</span>
         </h2>
 
         <p class="process-section__subtitle">
-          Design, construction and finishing run as
-          <span class="process-section__highlight">one continuous project</span>
-          under one team, so nothing gets lost between stages.
+          {{ t.process.subtitlePart1 }}
+          <span class="process-section__highlight">{{ t.process.subtitleHighlight }}</span>
+          {{ t.process.subtitlePart2 }}
         </p>
       </div>
 
@@ -27,7 +27,7 @@
         <article
           v-for="(card, index) in processSteps"
           :key="index"
-          :class="['process-card', 'reveal-on-scroll', `reveal-delay-${index + 1}`]"
+          class="process-card"
           tabindex="0"
         >
           <!-- Image 250px height, radius 16px with hover overlay -->
@@ -56,9 +56,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import SectionBadge from '~/components/ui/SectionBadge.vue'
+import { useI18n } from '~/composables/useI18n'
 
 const { app: { baseURL } } = useRuntimeConfig()
+const { t, isRtl } = useI18n()
 
 function getImageUrl(path: string) {
   if (!path) return ''
@@ -68,26 +71,26 @@ function getImageUrl(path: string) {
   return `${cleanBase}${cleanPath}`
 }
 
-const processSteps = [
+const processSteps = computed(() => [
   {
-    title: '01 DESIGN',
+    title: t.value.process.step1Title,
     image: '/images/process-1.png',
     alt: 'Concept drafting and architectural plans by ELYMANI',
-    description: 'We translate your vision into thoughtful architectural and interior concepts — every detail considered before we build.'
+    description: t.value.process.step1Desc
   },
   {
-    title: '02 EXECUTE',
+    title: t.value.process.step2Title,
     image: '/images/process-2.png',
     alt: 'On-site construction supervision and engineering',
-    description: 'We bring the design to life through precise construction and hands-on site supervision, every step of the way.'
+    description: t.value.process.step2Desc
   },
   {
-    title: '03 DELIVERY',
+    title: t.value.process.step3Title,
     image: '/images/process-3.png',
     alt: 'Luxury turnkey architectural delivery and final handover',
-    description: 'We stay accountable to quality and detail until the final handover — because delivery is part of the design.'
+    description: t.value.process.step3Desc
   }
-]
+])
 </script>
 
 <style scoped>

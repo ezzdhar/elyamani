@@ -8,13 +8,13 @@
     <div class="container about-section__container">
       <div class="about-section__grid">
         <!-- Content Column (#23:301, width 486px in Figma) -->
-        <div class="about-section__content reveal-on-scroll reveal-on-scroll--left">
-          <SectionBadge color="terracotta">WHO WE ARE</SectionBadge>
+        <div class="about-section__content">
+          <SectionBadge color="terracotta">{{ t.about.badge }}</SectionBadge>
           
-          <h2 class="about-section__title">ABOUT US</h2>
+          <h2 class="about-section__title">{{ t.about.title }}</h2>
 
           <p class="about-section__body">
-            ELYMANI brings architecture, interior design, and execution together under one integrated approach. From the first idea to the final detail, we take full responsibility for turning your vision into a space that's not just well designed — but well delivered.
+            {{ t.about.body }}
           </p>
 
           <div class="about-section__action">
@@ -25,13 +25,13 @@
               :show-arrow="false"
               aria-label="View our projects - Discover our portfolio"
             >
-              VIEW OUR PROJECTS
+              {{ t.about.cta }}
             </AppButton>
           </div>
         </div>
 
         <!-- Visual Showcase Column (#27:333, width 576px, height 533px in Figma) -->
-        <div class="about-section__visual reveal-on-scroll reveal-on-scroll--right reveal-delay-1">
+        <div class="about-section__visual">
           <div class="visual-wrapper">
             <!-- Main Arched Architecture Image (#26:325, 378x502, radius 24px) -->
             <img
@@ -45,9 +45,9 @@
 
             <!-- Floating Glass Card (#25:320, 263x162, radius 16px) -->
             <div class="glass-card" role="note" aria-label="Turnkey Solutions Highlight">
-              <h3 class="glass-card__title">Turnkey Solutions</h3>
+              <h3 class="glass-card__title">{{ t.about.cardTitle }}</h3>
               <p class="glass-card__desc">
-                Complete architectural design & turnkey execution under one roof.
+                {{ t.about.cardDesc }}
               </p>
             </div>
           </div>
@@ -60,6 +60,9 @@
 <script setup lang="ts">
 import SectionBadge from '~/components/ui/SectionBadge.vue'
 import AppButton from '~/components/ui/AppButton.vue'
+import { useI18n } from '~/composables/useI18n'
+
+const { t, isRtl } = useI18n()
 </script>
 
 <style scoped>
@@ -272,5 +275,27 @@ import AppButton from '~/components/ui/AppButton.vue'
   line-height: 21px;
   font-weight: 500;
   color: var(--color-sec-light);
+}
+
+/* RTL Adjustments */
+:global([dir="rtl"] .about-section__watermark) {
+  right: auto;
+  left: -100px;
+}
+
+:global([dir="rtl"] .visual-wrapper) {
+  justify-content: flex-start;
+}
+
+:global([dir="rtl"] .glass-card) {
+  left: auto;
+  right: 0;
+}
+
+@media (max-width: 640px) {
+  :global([dir="rtl"] .glass-card) {
+    right: auto;
+    left: auto;
+  }
 }
 </style>

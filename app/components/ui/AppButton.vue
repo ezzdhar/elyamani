@@ -184,6 +184,14 @@ const componentTag = computed(() => {
   transform: translateX(3px);
 }
 
+:global([dir="rtl"] .app-button__arrow) {
+  transform: scaleX(-1);
+}
+
+:global([dir="rtl"] .app-button:hover:not(.app-button--disabled) .app-button__arrow) {
+  transform: scaleX(-1) translateX(3px);
+}
+
 /* Spinner */
 .app-button__spinner {
   width: 16px;
@@ -191,7 +199,7 @@ const componentTag = computed(() => {
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: spin 0.75s linear infinite;
+  /* animation: spin 0.75s linear infinite; */
 }
 
 @keyframes spin {

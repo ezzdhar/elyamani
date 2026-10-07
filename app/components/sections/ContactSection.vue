@@ -3,17 +3,17 @@
     <div class="container contact-section__container">
       <div class="contact-section__grid">
         <!-- Left Column: Info & Architectural Polygon -->
-        <div class="contact-section__info reveal-on-scroll reveal-on-scroll--left">
-          <SectionBadge color="terracotta">CONTACT US</SectionBadge>
+        <div class="contact-section__info">
+          <SectionBadge color="terracotta">{{ t.contact.badge }}</SectionBadge>
 
           <h2 class="contact-section__title">
-            <span>SHARE YOUR VISION,</span>
-            <span>WE'LL TAKE IT FROM</span>
-            <span>THERE</span>
+            <span>{{ t.contact.titleLine1 }}</span>
+            <span>{{ t.contact.titleLine2 }}</span>
+            <span v-if="t.contact.titleLine3">{{ t.contact.titleLine3 }}</span>
           </h2>
 
           <p class="contact-section__body">
-            Based in New Damietta, ELYMANI is ready to take on your next architectural, interior, or execution project. Tell us about your space, and we'll get back to you with clarity on scope, timeline, and next steps.
+            {{ t.contact.body }}
           </p>
 
           <!-- Exact Triangular Marble Polygon Composition from Figma (#80:241) -->
@@ -33,7 +33,7 @@
         </div>
 
         <!-- Right Column: Contact Card (#82:14963, 531px width, 40px 80px padding in Figma) -->
-        <div class="contact-section__form-wrap reveal-on-scroll reveal-on-scroll--right reveal-delay-1">
+        <div class="contact-section__form-wrap">
           <div class="contact-card">
             <!-- Success Confirmation State -->
             <div
@@ -72,12 +72,12 @@
               <!-- Name Row (#80:14954, gap 24px) -->
               <div class="form-row">
                 <div class="form-field">
-                  <label for="firstName" class="field-label">First Name</label>
+                  <label for="firstName" class="field-label">{{ t.contact.form.firstName }}</label>
                   <input
                     id="firstName"
                     v-model="form.firstName"
                     type="text"
-                    placeholder="Enter your name"
+                    :placeholder="t.contact.form.firstNamePlaceholder"
                     class="field-input"
                     :aria-invalid="!!errors.firstName"
                     @blur="validateField('firstName')"
@@ -86,12 +86,12 @@
                 </div>
 
                 <div class="form-field">
-                  <label for="lastName" class="field-label">Last Name</label>
+                  <label for="lastName" class="field-label">{{ t.contact.form.lastName }}</label>
                   <input
                     id="lastName"
                     v-model="form.lastName"
                     type="text"
-                    placeholder="Enter your last name"
+                    :placeholder="t.contact.form.lastNamePlaceholder"
                     class="field-input"
                     :aria-invalid="!!errors.lastName"
                     @blur="validateField('lastName')"
@@ -102,12 +102,12 @@
 
               <!-- Phone (#80:14878) -->
               <div class="form-field">
-                <label for="phone" class="field-label">Phone</label>
+                <label for="phone" class="field-label">{{ t.contact.form.phone }}</label>
                 <input
                   id="phone"
                   v-model="form.phone"
                   type="tel"
-                  placeholder="010 807 478 32"
+                  :placeholder="t.contact.form.phonePlaceholder"
                   class="field-input"
                   :aria-invalid="!!errors.phone"
                   @blur="validateField('phone')"
@@ -117,12 +117,12 @@
 
               <!-- Email (#80:14890) -->
               <div class="form-field">
-                <label for="email" class="field-label">Email</label>
+                <label for="email" class="field-label">{{ t.contact.form.email }}</label>
                 <input
                   id="email"
                   v-model="form.email"
                   type="email"
-                  placeholder="Enter your email"
+                  :placeholder="t.contact.form.emailPlaceholder"
                   class="field-input"
                   :aria-invalid="!!errors.email"
                   @blur="validateField('email')"
@@ -132,18 +132,18 @@
 
               <!-- How did you hear about us? (#80:14955, height 65px in Figma) -->
               <div class="form-field">
-                <label for="referral" class="field-label">How did you hear about us?</label>
+                <label for="referral" class="field-label">{{ t.contact.form.referral }}</label>
                 <div class="select-box">
                   <select
                     id="referral"
                     v-model="form.referral"
                     class="field-input field-input--select"
                   >
-                    <option value="Facebook , Instagram">Facebook , Instagram</option>
-                    <option value="Referral / Recommendation">Referral / Recommendation</option>
-                    <option value="Google Search">Google Search</option>
-                    <option value="Previous Client">Previous Client</option>
-                    <option value="Other">Other</option>
+                    <option value="Facebook , Instagram">{{ t.contact.form.referralOption1 }}</option>
+                    <option value="Referral / Recommendation">{{ t.contact.form.referralOption2 }}</option>
+                    <option value="Google Search">{{ t.contact.form.referralOption3 }}</option>
+                    <option value="Previous Client">{{ t.contact.form.referralOption4 }}</option>
+                    <option value="Other">{{ t.contact.form.referralOption5 }}</option>
                   </select>
                   <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -153,11 +153,11 @@
 
               <!-- Project details (#82:14957, height 109px in Figma) -->
               <div class="form-field">
-                <label for="projectDetails" class="field-label">Project details</label>
+                <label for="projectDetails" class="field-label">{{ t.contact.form.projectDetails }}</label>
                 <textarea
                   id="projectDetails"
                   v-model="form.projectDetails"
-                  placeholder="Project description"
+                  :placeholder="t.contact.form.projectDetailsPlaceholder"
                   class="field-input field-input--textarea"
                   :aria-invalid="!!errors.projectDetails"
                   @blur="validateField('projectDetails')"
@@ -176,7 +176,7 @@
                   style="width: 100%; height: 56px; border-radius: 3px;"
                   aria-label="Submit project consultation inquiry"
                 >
-                  Submit
+                  {{ t.contact.form.submit }}
                 </AppButton>
               </div>
             </form>
@@ -191,6 +191,9 @@
 import { reactive, ref } from 'vue'
 import SectionBadge from '~/components/ui/SectionBadge.vue'
 import AppButton from '~/components/ui/AppButton.vue'
+import { useI18n } from '~/composables/useI18n'
+
+const { t, isRtl } = useI18n()
 
 interface FormData {
   firstName: string
@@ -542,5 +545,21 @@ function resetForm() {
   line-height: 1.6;
   color: var(--color-sec-light);
   opacity: 0.9;
+}
+
+/* RTL Adjustments */
+:global([dir="rtl"] .contact-section__polygon-wrap) {
+  margin-left: 0;
+  margin-right: -40px;
+}
+
+:global([dir="rtl"] .field-input--select) {
+  padding-right: 14px;
+  padding-left: 36px;
+}
+
+:global([dir="rtl"] .select-arrow) {
+  right: auto;
+  left: 14px;
 }
 </style>

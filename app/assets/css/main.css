@@ -1,7 +1,9 @@
 @import './variables.css';
 
 /* Modern CSS Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -65,7 +67,12 @@ body {
 }
 
 /* Typography Defaults */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.2;
@@ -88,7 +95,8 @@ button {
   background: none;
 }
 
-img, svg {
+img,
+svg {
   display: block;
   max-width: 100%;
   height: auto;
@@ -147,6 +155,7 @@ img, svg {
     opacity: 0;
     transform: translateY(12px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -154,86 +163,58 @@ img, svg {
 }
 
 @keyframes pulseGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.6;
   }
+
   50% {
     opacity: 0.9;
   }
 }
 
-/* Scroll Reveal Animations */
-.js-reveals .reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.js-reveals .reveal-on-scroll.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.js-reveals .reveal-on-scroll--fade {
-  transform: none;
-}
-.js-reveals .reveal-on-scroll--fade.is-revealed {
-  transform: none;
-}
-
-.js-reveals .reveal-on-scroll--left {
-  transform: translateX(-30px);
-}
-.js-reveals .reveal-on-scroll--left.is-revealed {
-  transform: translateX(0);
-}
-
-.js-reveals .reveal-on-scroll--right {
-  transform: translateX(30px);
-}
-.js-reveals .reveal-on-scroll--right.is-revealed {
-  transform: translateX(0);
-}
-
-.js-reveals .reveal-on-scroll--scale {
-  transform: scale(0.94);
-}
-.js-reveals .reveal-on-scroll--scale.is-revealed {
-  transform: scale(1);
-}
-
-/* Stagger Delays */
-.js-reveals .reveal-delay-1 {
-  transition-delay: 0.12s;
-}
-
-.js-reveals .reveal-delay-2 {
-  transition-delay: 0.24s;
-}
-
-.js-reveals .reveal-delay-3 {
-  transition-delay: 0.36s;
-}
-
-.js-reveals .reveal-delay-4 {
-  transition-delay: 0.48s;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
 
-  .js-reveals .reveal-on-scroll,
-  .js-reveals .reveal-on-scroll.is-revealed {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+  *,
+  *::before,
+  *::after {
+    /* animation-duration: 0.01ms !important; */
+    /* animation-iteration-count: 1 !important; */
+    /* transition-duration: 0.01ms !important; */
+    /* scroll-behavior: auto !important; */
   }
 }
 
+/* ==========================================================================
+   RTL Typography & Directional Utilities
+   ========================================================================== */
+/* The root (html) stays LTR on purpose: an RTL root flips the viewport scroll origin
+   and can push the whole page off-screen. RTL is applied on body instead. */
+body.rtl,
+body[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Cairo', var(--font-sans);
+}
+
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] h5,
+html[dir="rtl"] h6,
+html.rtl h1,
+html.rtl h2,
+html.rtl h3,
+html.rtl h4,
+html.rtl h5,
+html.rtl h6 {
+  font-family: 'Cairo', var(--font-heading);
+}
+
+html[dir="rtl"] .skip-link,
+html.rtl .skip-link {
+  left: auto;
+  right: 20px;
+}

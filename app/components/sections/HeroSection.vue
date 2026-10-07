@@ -21,26 +21,26 @@
     </div>
 
     <div class="container hero-section__container">
-      <div class="hero-section__content reveal-on-scroll">
+      <div class="hero-section__content">
         <!-- Disciplines Breadcrumb / Tag -->
         <div class="hero-section__disciplines" aria-label="Our Core Disciplines">
-          <span class="discipline-tag">ARCHITECTURE</span>
+          <span class="discipline-tag">{{ t.hero.disciplines.architecture }}</span>
           <span class="discipline-dot" aria-hidden="true">•</span>
-          <span class="discipline-tag">INTERIOR DESIGN</span>
+          <span class="discipline-tag">{{ t.hero.disciplines.interiorDesign }}</span>
           <span class="discipline-dot" aria-hidden="true">•</span>
-          <span class="discipline-tag">EXECUTION</span>
+          <span class="discipline-tag">{{ t.hero.disciplines.execution }}</span>
         </div>
 
         <!-- Main Title (3 lines: DESIGN YOUR / SPACE WITH / PURPOSE) -->
         <h1 class="hero-section__title">
-          <span class="title-line title-light">DESIGN YOUR</span>
-          <span class="title-line title-light">SPACE WITH</span>
-          <span class="title-line title-accent">PURPOSE</span>
+          <span class="title-line title-light">{{ t.hero.titleLine1 }}</span>
+          <span class="title-line title-light">{{ t.hero.titleLine2 }}</span>
+          <span class="title-line title-accent">{{ t.hero.titleLine3 }}</span>
         </h1>
 
         <!-- Subtitle -->
         <p class="hero-section__subtitle">
-          From concept to completion, we create thoughtful spaces through architecture, interior design, and execution.
+          {{ t.hero.subtitle }}
         </p>
 
         <!-- CTA Buttons matching Figma dimensions (height 54px, radius 3px) -->
@@ -53,7 +53,7 @@
             class="hero-btn hero-btn--primary"
             aria-label="Book a consultation with ELYMANI"
           >
-            BOOK A CONSULTATION
+            {{ t.hero.ctaConsultation }}
           </AppButton>
 
           <AppButton
@@ -64,13 +64,13 @@
             class="hero-btn hero-btn--secondary"
             aria-label="Build your workspace - Explore services"
           >
-            BUILD YOUR WORKSPACE
+            {{ t.hero.ctaWorkspace }}
           </AppButton>
         </div>
       </div>
 
       <!-- Bottom Glassmorphic Feature Bar -->
-      <div class="hero-section__feature-bar reveal-on-scroll reveal-delay-2" role="region" aria-label="Key Commitments">
+      <div class="hero-section__feature-bar" role="region" aria-label="Key Commitments">
         <div class="feature-item">
           <img
             src="/images/icon-cube-alt.svg"
@@ -80,9 +80,7 @@
             width="34"
             height="34"
           />
-          <span class="feature-item__text">
-            ONE PARTNER FULL<br />RESPONSIBILITY
-          </span>
+          <span class="feature-item__text" v-html="t.hero.features.partner"></span>
         </div>
 
         <div class="feature-divider" aria-hidden="true"></div>
@@ -96,9 +94,7 @@
             width="34"
             height="34"
           />
-          <span class="feature-item__text">
-            PRECISION IN<br />EVERY DETAIL
-          </span>
+          <span class="feature-item__text" v-html="t.hero.features.precision"></span>
         </div>
 
         <div class="feature-divider" aria-hidden="true"></div>
@@ -112,9 +108,7 @@
             width="34"
             height="34"
           />
-          <span class="feature-item__text">
-            DESIGN TO<br />DELIVERY
-          </span>
+          <span class="feature-item__text" v-html="t.hero.features.delivery"></span>
         </div>
       </div>
     </div>
@@ -122,8 +116,18 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import AppButton from '~/components/ui/AppButton.vue'
 import { withBase } from '~/utils/asset'
+import { useI18n } from '~/composables/useI18n'
+
+const { t, isRtl } = useI18n()
+
+const isLoading = ref(false)
+const heroImgRef = ref<HTMLImageElement | null>(null)
+function handleImageLoad() {
+  isLoading.value = false
+}
 </script>
 
 <style scoped>
@@ -172,6 +176,19 @@ import { withBase } from '~/utils/asset'
       #143135 100%
     );
   pointer-events: none;
+}
+
+:global([dir="rtl"] .hero-section__overlay) {
+  background: 
+    linear-gradient(270deg, rgba(0, 0, 0, 0.44) 0%, rgba(0, 0, 0, 0.16) 45%, transparent 75%),
+    linear-gradient(180deg, 
+      rgba(0, 0, 0, 0.38) 0%, 
+      rgba(0, 0, 0, 0.18) 45%, 
+      rgba(0, 0, 0, 0.22) 75%, 
+      rgba(20, 49, 53, 0.5) 88%, 
+      rgba(20, 49, 53, 0.9) 97%, 
+      #143135 100%
+    );
 }
 
 /* Container: shares the exact centered container with Header and About Us */

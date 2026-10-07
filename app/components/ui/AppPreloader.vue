@@ -24,7 +24,9 @@
         <!-- Brand Title & Subtitle -->
         <div class="app-preloader__brand">
           <span class="app-preloader__title">ELYMANI</span>
-          <span class="app-preloader__subtitle">Architecture • Interior Design • Execution</span>
+          <span class="app-preloader__subtitle">
+            {{ isRtl ? `${t.hero.disciplines.architecture} • ${t.hero.disciplines.interiorDesign} • ${t.hero.disciplines.execution}` : 'Architecture • Interior Design • Execution' }}
+          </span>
         </div>
 
         <!-- Progress Shimmer Bar -->
@@ -39,6 +41,9 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { withBase } from '~/utils/asset'
+import { useI18n } from '~/composables/useI18n'
+
+const { t, isRtl } = useI18n()
 
 const emit = defineEmits<{
   (e: 'loaded'): void
@@ -155,7 +160,7 @@ watch(isLoading, (val) => {
   inset: 0;
   border: 2px solid rgba(252, 239, 212, 0.14);
   border-top-color: var(--color-cream);
-  animation: preloaderSpin 1.4s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+  /* animation: preloaderSpin 1.4s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite; */
   box-shadow: 0 0 24px rgba(252, 239, 212, 0.2);
 }
 
@@ -163,7 +168,7 @@ watch(isLoading, (val) => {
   inset: 12px;
   border: 1.5px solid rgba(199, 107, 78, 0.18);
   border-bottom-color: var(--color-terracotta);
-  animation: preloaderSpin 2.1s linear infinite reverse;
+  /* animation: preloaderSpin 2.1s linear infinite reverse; */
 }
 
 .app-preloader__logo {
@@ -172,7 +177,7 @@ watch(isLoading, (val) => {
   height: 60px;
   object-fit: contain;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.65));
-  animation: preloaderPulse 2.2s ease-in-out infinite;
+  /* animation: preloaderPulse 2.2s ease-in-out infinite; */
 }
 
 .app-preloader__brand {
@@ -217,7 +222,7 @@ watch(isLoading, (val) => {
   height: 100%;
   width: 45%;
   background: linear-gradient(90deg, transparent, var(--color-cream), transparent);
-  animation: preloaderSlide 1.3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  /* animation: preloaderSlide 1.3s cubic-bezier(0.4, 0, 0.2, 1) infinite; */
 }
 
 /* Animations */
@@ -265,7 +270,7 @@ watch(isLoading, (val) => {
   .app-preloader__ring,
   .app-preloader__logo,
   .app-preloader__progress-bar {
-    animation: none !important;
+    /* animation: none !important; */
   }
   .app-preloader-fade-enter-active,
   .app-preloader-fade-leave-active {

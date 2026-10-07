@@ -28,8 +28,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useHead, useSeoMeta, useRuntimeConfig } from '#imports'
-import { useScrollReveal } from '~/composables/useScrollReveal'
+import { useI18n } from '~/composables/useI18n'
 import AppPreloader from '~/components/ui/AppPreloader.vue'
 import AppHeader from '~/components/layout/AppHeader.vue'
 import AppFooter from '~/components/layout/AppFooter.vue'
@@ -39,8 +40,8 @@ import ProcessSection from '~/components/sections/ProcessSection.vue'
 import ServicesSection from '~/components/sections/ServicesSection.vue'
 import ContactSection from '~/components/sections/ContactSection.vue'
 
-// Initialize smooth scroll reveal animations
-useScrollReveal()
+// Initialize i18n
+const { locale, dir } = useI18n()
 
 const config = useRuntimeConfig()
 const base = config.app.baseURL || '/'
@@ -61,6 +62,16 @@ useSeoMeta({
 
 // Structured JSON-LD Data for SEO
 useHead({
+  htmlAttrs: {
+    lang: locale,
+    class: computed(() => (locale.value === 'ar' ? 'rtl' : ''))
+  },
+  bodyAttrs: {
+    dir: dir,
+    class: computed(() => (locale.value === 'ar' ? 'rtl' : ''))
+  },
+  // Apply saved direction before first paint so the layout never flips after load
+  __dangerouslyDisableSanitizersByTagID: { 'early-locale': ['innerHTML'] },
   link: [
     { rel: 'icon', type: 'image/x-icon', href: withBase('favicon.ico') },
     { rel: 'shortcut icon', href: withBase('favicon.ico') },
@@ -68,6 +79,11 @@ useHead({
     { rel: 'apple-touch-icon', href: withBase('apple-touch-icon.png') }
   ],
   script: [
+    {
+      key: 'early-locale',
+      tagPriority: 'critical',
+      innerHTML: "try{var l=localStorage.getItem('elyamani_locale');if(l==='ar'){var d=document.documentElement;d.lang='ar';d.classList.add('rtl')}}catch(e){}"
+    },
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({

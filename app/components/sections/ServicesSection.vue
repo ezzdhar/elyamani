@@ -8,7 +8,7 @@
     <div class="container services-section__container">
       <div class="services-section__grid">
         <!-- 4-Photo Architectural Collage (#63:89, 612x572 in Figma) -->
-        <div class="services-section__gallery reveal-on-scroll reveal-on-scroll--left" role="region" aria-label="Architecture and Design Portfolio Highlights">
+        <div class="services-section__gallery" role="region" aria-label="Architecture and Design Portfolio Highlights">
           <picture>
             <source srcset="/images/services-collage.webp" type="image/webp" />
             <img
@@ -23,17 +23,17 @@
         </div>
 
         <!-- Content Column (#73:91, width 486px in Figma) -->
-        <div class="services-section__content reveal-on-scroll reveal-on-scroll--right reveal-delay-1">
-          <SectionBadge color="green">WHAT WE DO</SectionBadge>
+        <div class="services-section__content">
+          <SectionBadge color="green">{{ t.services.badge }}</SectionBadge>
 
           <h2 class="services-section__title">
-            <span>EVERY DISCIPLINE,</span>
-            <span>ONE RESPONSIBLE</span>
-            <span>TEAM</span>
+            <span>{{ t.services.titleLine1 }}</span>
+            <span>{{ t.services.titleLine2 }}</span>
+            <span v-if="t.services.titleLine3">{{ t.services.titleLine3 }}</span>
           </h2>
 
           <p class="services-section__body">
-            From the first architectural sketch to the final finishing detail, ELYMANI manages every discipline under one accountable team — so nothing gets lost between design and execution.
+            {{ t.services.body }}
           </p>
 
           <div class="services-section__action">
@@ -45,7 +45,7 @@
               aria-label="Contact ELYMANI to discuss your project"
               style="width: 251px;"
             >
-              CONTACT US
+              {{ t.services.cta }}
             </AppButton>
           </div>
         </div>
@@ -57,6 +57,9 @@
 <script setup lang="ts">
 import SectionBadge from '~/components/ui/SectionBadge.vue'
 import AppButton from '~/components/ui/AppButton.vue'
+import { useI18n } from '~/composables/useI18n'
+
+const { t, isRtl } = useI18n()
 </script>
 
 <style scoped>
@@ -202,5 +205,11 @@ import AppButton from '~/components/ui/AppButton.vue'
 
 .services-section__action {
   margin-top: 8px;
+}
+
+/* RTL Adjustments */
+:global([dir="rtl"] .services-section__watermark) {
+  left: auto;
+  right: -180px;
 }
 </style>

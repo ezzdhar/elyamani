@@ -7,7 +7,7 @@
       <!-- Brand Logo (Symbol + Calligraphy + Wordmark) -->
       <NuxtLink to="#home" class="app-header__brand" aria-label="ELYMANI Home">
         <img
-          src="/images/header-logo.png"
+          src="/images/logo-text.png"
           alt="ELYMANI Architecture & Execution"
           class="app-header__logo"
           width="135"
@@ -36,6 +36,7 @@
         </nav>
 
         <div class="app-header__action">
+          <LanguageToggle />
           <AppButton
             variant="secondary"
             size="sm"
@@ -43,7 +44,7 @@
             :show-arrow="false"
             aria-label="Design your space - Contact us"
           >
-            DESIGN YOUR SPACE
+            {{ t.header.cta }}
           </AppButton>
         </div>
       </div>
@@ -87,24 +88,27 @@
             <div class="app-header__mobile-drawer-header">
               <NuxtLink to="#home" class="app-header__brand" @click="isMobileMenuOpen = false">
                 <img
-                  src="/images/header-logo.png"
+                  src="/images/logo-text.png"
                   alt="ELYMANI"
                   class="app-header__logo"
                   width="120"
                   height="46"
                 />
               </NuxtLink>
-              <button
-                type="button"
-                class="app-header__mobile-close"
-                aria-label="Close Navigation Menu"
-                @click="isMobileMenuOpen = false"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
+              <div class="app-header__mobile-header-actions">
+                <LanguageToggle />
+                <button
+                  type="button"
+                  class="app-header__mobile-close"
+                  aria-label="Close Navigation Menu"
+                  @click="isMobileMenuOpen = false"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <nav class="app-header__mobile-nav">
@@ -133,7 +137,7 @@
                 style="width: 100%;"
                 @click="isMobileMenuOpen = false"
               >
-                DESIGN YOUR SPACE
+                {{ t.header.cta }}
               </AppButton>
             </div>
           </div>
@@ -144,16 +148,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import AppButton from '~/components/ui/AppButton.vue'
+import LanguageToggle from '~/components/ui/LanguageToggle.vue'
+import { useI18n } from '~/composables/useI18n'
 
-const navItems = [
-  { label: 'Home', href: '#home', id: 'home' },
-  { label: 'About', href: '#about', id: 'about' },
-  { label: 'Process', href: '#process', id: 'process' },
-  { label: 'Services', href: '#services', id: 'services' },
-  { label: 'Contact', href: '#contact', id: 'contact' }
-]
+const { t, isRtl } = useI18n()
+
+const navItems = computed(() => [
+  { label: t.value.header.nav.home, href: '#home', id: 'home' },
+  { label: t.value.header.nav.about, href: '#about', id: 'about' },
+  { label: t.value.header.nav.process, href: '#process', id: 'process' },
+  { label: t.value.header.nav.services, href: '#services', id: 'services' },
+  { label: t.value.header.nav.contact, href: '#contact', id: 'contact' }
+])
 
 const activeSection = ref('home')
 const isScrolled = ref(false)
@@ -249,7 +257,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: clamp(14px, 1.8vw, 24px);
   width: 100%;
 }
 
@@ -258,10 +266,11 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .app-header__logo {
-  height: 44px;
+  height: 74px;
   width: auto;
   object-fit: contain;
 }
@@ -275,7 +284,8 @@ onUnmounted(() => {
   .app-header__right {
     display: flex;
     align-items: center;
-    gap: clamp(28px, 2.5vw, 40px);
+    gap: clamp(16px, 2vw, 36px);
+    flex-shrink: 1;
   }
 }
 
@@ -286,7 +296,7 @@ onUnmounted(() => {
 .app-header__nav-list {
   display: flex;
   align-items: center;
-  gap: clamp(20px, 2vw, 32px);
+  gap: clamp(12px, 1.5vw, 28px);
   list-style: none;
 }
 
@@ -318,7 +328,9 @@ onUnmounted(() => {
 
 @media (min-width: 992px) {
   .app-header__action {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 14px;
   }
 }
 
@@ -444,6 +456,12 @@ onUnmounted(() => {
   border-bottom: 1px solid rgba(252, 239, 212, 0.1);
 }
 
+.app-header__mobile-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .app-header__mobile-close {
   color: var(--color-cream);
   padding: 8px;
@@ -492,5 +510,18 @@ onUnmounted(() => {
 }
 .slide-enter-from, .slide-leave-to {
   transform: translateX(100%);
+}
+
+/* RTL Mobile Drawer */
+:global([dir="rtl"] .app-header__mobile-drawer) {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid rgba(252, 239, 212, 0.15);
+}
+
+:global([dir="rtl"] .slide-enter-from),
+:global([dir="rtl"] .slide-leave-to) {
+  transform: translateX(-100%);
 }
 </style>

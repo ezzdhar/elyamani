@@ -1,26 +1,20 @@
 <template>
   <footer class="app-footer" role="contentinfo">
-    <div class="container app-footer__container reveal-on-scroll">
+    <div class="container app-footer__container">
       <div class="app-footer__grid">
         <!-- Brand Column (#82:14969, width: 188px in Figma) -->
         <div class="app-footer__col app-footer__col--brand">
           <div class="app-footer__brand">
             <img
               src="/images/footer-logo.png"
-              alt="ELYMANI"
+              :alt="t.footer.brand"
               class="app-footer__logo"
               width="120"
               height="33"
             />
           </div>
 
-          <p class="app-footer__description">
-            Architecture, Interior<br />
-            Design, And<br />
-            Construction, Brought<br />
-            Together Under One<br />
-            Integrated Approach.
-          </p>
+          <p class="app-footer__description" v-html="t.footer.description"></p>
 
           <!-- Social Icons (#82:15014) -->
           <div class="app-footer__socials" aria-label="Social media profiles">
@@ -56,31 +50,31 @@
 
         <!-- Quick Links (#82:14970) -->
         <div class="app-footer__col">
-          <h2 class="app-footer__title">QUICK LINKS</h2>
+          <h2 class="app-footer__title">{{ t.footer.quickLinksTitle }}</h2>
           <ul class="app-footer__links" role="list">
-            <li><a href="#about" class="app-footer__link">ABOUT US</a></li>
-            <li><a href="#process" class="app-footer__link">PROCESS</a></li>
-            <li><a href="#services" class="app-footer__link">SERVICES</a></li>
-            <li><a href="#contact" class="app-footer__link">CONTACT</a></li>
+            <li><a href="#about" class="app-footer__link">{{ t.footer.links.about }}</a></li>
+            <li><a href="#process" class="app-footer__link">{{ t.footer.links.process }}</a></li>
+            <li><a href="#services" class="app-footer__link">{{ t.footer.links.services }}</a></li>
+            <li><a href="#contact" class="app-footer__link">{{ t.footer.links.contact }}</a></li>
           </ul>
         </div>
 
         <!-- Services (#82:14978) -->
         <div class="app-footer__col">
-          <h2 class="app-footer__title">SERVICES</h2>
+          <h2 class="app-footer__title">{{ t.footer.servicesTitle }}</h2>
           <ul class="app-footer__links" role="list">
-            <li><a href="#services" class="app-footer__link">ARCHITECTURAL DESIGN</a></li>
-            <li><a href="#services" class="app-footer__link">INTERIOR DESIGN</a></li>
-            <li><a href="#services" class="app-footer__link">EXECUTION AND FINISHING</a></li>
-            <li><a href="#services" class="app-footer__link">PROJECT MANAGEMENT</a></li>
+            <li><a href="#services" class="app-footer__link">{{ t.footer.servicesList.architecturalDesign }}</a></li>
+            <li><a href="#services" class="app-footer__link">{{ t.footer.servicesList.interiorDesign }}</a></li>
+            <li><a href="#services" class="app-footer__link">{{ t.footer.servicesList.executionAndFinishing }}</a></li>
+            <li><a href="#services" class="app-footer__link">{{ t.footer.servicesList.projectManagement }}</a></li>
           </ul>
         </div>
 
         <!-- Get In Touch (#82:14985) -->
         <div class="app-footer__col">
-          <h2 class="app-footer__title">GET IN TOUCH</h2>
+          <h2 class="app-footer__title">{{ t.footer.getInTouchTitle }}</h2>
           <address class="app-footer__address">
-            <p class="app-footer__contact-text">New Damietta, Egypt</p>
+            <p class="app-footer__contact-text">{{ t.footer.location }}</p>
             <p class="app-footer__contact-text">
               <a href="mailto:Info@Elymani.Com" class="app-footer__link">Info@Elymani.Com</a>
             </p>
@@ -105,12 +99,18 @@
       <!-- Bottom Bar -->
       <div class="app-footer__bottom">
         <p class="app-footer__copyright">
-          © 2026 ELYMANI. All rights reserved.
+          {{ t.footer.copyright }}
         </p>
       </div>
     </div>
   </footer>
 </template>
+
+<script setup lang="ts">
+import { useI18n } from '~/composables/useI18n'
+
+const { t, isRtl } = useI18n()
+</script>
 
 <style scoped>
 .app-footer {

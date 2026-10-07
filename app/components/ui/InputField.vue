@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div :class="['input-group', { 'input-group--error': !!error }]">
     <label :for="id" class="input-label">
       {{ label }}
@@ -207,6 +207,16 @@ function onChange(event: Event) {
   transform: translateY(-50%);
   pointer-events: none;
   color: var(--color-card-darker);
+}
+
+:global([dir="rtl"] .input-control--select) {
+  padding-right: 14px;
+  padding-left: 36px;
+}
+
+:global([dir="rtl"] .select-arrow) {
+  right: auto;
+  left: 12px;
 }
 
 /* Error State */
