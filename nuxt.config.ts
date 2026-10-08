@@ -1,4 +1,5 @@
-const baseURL = process.env.NUXT_APP_BASE_URL || (process.env.GITHUB_ACTIONS ? '/elyamani/' : '/')
+// const baseURL = process.env.NUXT_APP_BASE_URL || (process.env.GITHUB_ACTIONS ? '/elyamani/' : '/')
+const baseURL = process.env.NUXT_APP_BASE_URL || '/'
 const cleanBase = baseURL.endsWith('/') ? baseURL : `${baseURL}/`
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
