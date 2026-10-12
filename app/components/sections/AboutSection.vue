@@ -34,14 +34,17 @@
         <div class="about-section__visual">
           <div class="visual-wrapper">
             <!-- Main Arched Architecture Image (#26:325, 378x502, radius 24px) -->
-            <img
-              src="/images/about-main.png"
-              alt="Complete architectural and interior integration by ELYMANI"
-              class="main-img"
-              loading="lazy"
-              width="378"
-              height="502"
-            />
+            <div class="main-img-wrap">
+              <img
+                src="/images/about-main.png"
+                alt="Complete architectural and interior integration by ELYMANI"
+                class="main-img"
+                loading="lazy"
+                width="378"
+                height="502"
+              />
+              <div class="main-img-overlay" aria-hidden="true"></div>
+            </div>
 
             <!-- Floating Glass Card (#25:320, 263x162, radius 16px) -->
             <div class="glass-card" role="note" aria-label="Turnkey Solutions Highlight">
@@ -163,7 +166,7 @@ const { t, isRtl } = useI18n()
   font-size: 2.25rem;
   line-height: 1.25;
   font-weight: 600;
-  color: #FAF8F6;
+  color: var(--color-text-offwhite, #F5F5F2);
   letter-spacing: 0.03em;
 }
 
@@ -179,7 +182,7 @@ const { t, isRtl } = useI18n()
   font-size: 1.125rem; /* 18px */
   line-height: 1.65;
   font-weight: 500;
-  color: #FAF8F6;
+  color: var(--color-text-offwhite, #F5F5F2);
   max-width: 486px;
 }
 
@@ -216,14 +219,36 @@ const { t, isRtl } = useI18n()
   align-items: flex-start;
 }
 
-/* Main Image #26:325 (378x502, radius 24px) */
-.main-img {
+/* Main Image Wrapper & Image #26:325 (378x502, radius 24px) */
+.main-img-wrap {
+  position: relative;
   width: 100%;
   max-width: 378px;
   height: 502px;
-  object-fit: cover;
   border-radius: 24px;
+  overflow: hidden;
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1), 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Subtle corner gradient overlay near text card overlap region */
+.main-img-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 24px;
+  background: linear-gradient(
+    to top right,
+    rgba(15, 48, 48, 0.65) 0%,
+    rgba(15, 48, 48, 0.3) 25%,
+    transparent 50%
+  );
 }
 
 /* Floating Glass Card #25:320 (263x162, radius 16px) */
@@ -233,17 +258,17 @@ const { t, isRtl } = useI18n()
   bottom: 0;
   width: 263px;
   min-height: 162px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--color-card-teal-bg, rgba(15, 48, 48, 0.68));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--color-card-border-subtle, rgba(255, 255, 255, 0.2));
   border-radius: 16px;
   padding: 24px 28px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 3;
 }
 
@@ -252,29 +277,43 @@ const { t, isRtl } = useI18n()
     min-height: auto;
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
+
+  .main-img-wrap {
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 378 / 480;
+    max-height: 460px;
+  }
+
   .glass-card {
     position: relative;
-    margin-top: -60px;
+    margin-top: -44px;
     left: auto;
+    right: auto;
     bottom: auto;
+    width: min(100%, 320px);
+    padding: 20px 24px;
   }
 }
 
 .glass-card__title {
   font-family: var(--font-heading);
   font-size: 20px;
-  line-height: 30px;
+  line-height: 1.4;
   font-weight: 600;
-  color: var(--color-cream);
+  color: var(--color-gold-highlight, #F3DFA0);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .glass-card__desc {
   font-family: var(--font-sans);
   font-size: 14px;
-  line-height: 21px;
+  line-height: 1.55;
   font-weight: 500;
-  color: var(--color-sec-light);
+  color: var(--color-text-offwhite, #F5F5F2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* RTL Adjustments */
@@ -284,12 +323,21 @@ const { t, isRtl } = useI18n()
 }
 
 :global([dir="rtl"] .visual-wrapper) {
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 :global([dir="rtl"] .glass-card) {
   left: auto;
-  right: -200px;
+  right: 0;
+}
+
+:global([dir="rtl"] .main-img-overlay) {
+  background: linear-gradient(
+    to top left,
+    rgba(15, 48, 48, 0.65) 0%,
+    rgba(15, 48, 48, 0.3) 25%,
+    transparent 50%
+  );
 }
 
 @media (max-width: 640px) {
