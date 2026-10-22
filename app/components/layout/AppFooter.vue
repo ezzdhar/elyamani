@@ -76,7 +76,7 @@
           <address class="app-footer__address">
             <p class="app-footer__contact-text">{{ t.footer.location }}</p>
             <p class="app-footer__contact-text">
-              <a href="mailto:info@el-yamani.com" class="app-footer__link">info@el-yamani.com</a>
+              <a href="mailto:elyamani.cfd@gmail.com" class="app-footer__link">elyamani.cfd@gmail.com</a>
             </p>
             <p class="app-footer__contact-text">
               <a

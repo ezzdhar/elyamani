@@ -94,8 +94,8 @@ useHead({
         description: 'Comprehensive architectural design, interior design, and turnkey construction execution under one accountable team.',
         image: 'https://elyamani.com/images/about-main.png',
         url: 'https://elyamani.com',
-        telephone: '+20100000000',
-        email: 'info@elyamani.com',
+        telephone: '+201090099517',
+        email: 'elyamani.cfd@gmail.com',
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'New Damietta',

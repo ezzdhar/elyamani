@@ -66,6 +66,8 @@
             <form
               v-else
               class="contact-form"
+              action="/api/contact.php"
+              method="POST"
               novalidate
               @submit.prevent="handleSubmit"
             >
@@ -75,6 +77,7 @@
                   <label for="firstName" class="field-label">{{ t.contact.form.firstName }}</label>
                   <input
                     id="firstName"
+                    name="firstName"
                     v-model="form.firstName"
                     type="text"
                     :placeholder="t.contact.form.firstNamePlaceholder"
@@ -89,6 +92,7 @@
                   <label for="lastName" class="field-label">{{ t.contact.form.lastName }}</label>
                   <input
                     id="lastName"
+                    name="lastName"
                     v-model="form.lastName"
                     type="text"
                     :placeholder="t.contact.form.lastNamePlaceholder"
@@ -105,6 +109,7 @@
                 <label for="phone" class="field-label">{{ t.contact.form.phone }}</label>
                 <input
                   id="phone"
+                  name="phone"
                   v-model="form.phone"
                   type="tel"
                   :placeholder="t.contact.form.phonePlaceholder"
@@ -120,6 +125,7 @@
                 <label for="email" class="field-label">{{ t.contact.form.email }}</label>
                 <input
                   id="email"
+                  name="email"
                   v-model="form.email"
                   type="email"
                   :placeholder="t.contact.form.emailPlaceholder"
@@ -136,6 +142,7 @@
                 <div class="select-box">
                   <select
                     id="referral"
+                    name="referral"
                     v-model="form.referral"
                     class="field-input field-input--select"
                   >
@@ -156,6 +163,7 @@
                 <label for="projectDetails" class="field-label">{{ t.contact.form.projectDetails }}</label>
                 <textarea
                   id="projectDetails"
+                  name="projectDetails"
                   v-model="form.projectDetails"
                   :placeholder="t.contact.form.projectDetailsPlaceholder"
                   class="field-input field-input--textarea"
@@ -163,6 +171,16 @@
                   @blur="validateField('projectDetails')"
                 ></textarea>
                 <span v-if="errors.projectDetails" class="field-error">{{ errors.projectDetails }}</span>
+              </div>
+
+              <!-- Error Alert -->
+              <div v-if="submitError" class="form-submit-error" role="alert">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>{{ submitError }}</span>
               </div>
 
               <!-- Submit Button (#80:14951, height 56px, radius 3px in Figma) -->
@@ -242,6 +260,7 @@ const errors = computed<Record<string, string>>(() => {
 
 const isLoading = ref(false)
 const isSubmitted = ref(false)
+const submitError = ref('')
 
 function validateField(field: keyof FormData): boolean {
   errorKeys[field] = ''
@@ -303,9 +322,42 @@ async function handleSubmit() {
   if (!validateAll()) return
 
   isLoading.value = true
-  await new Promise((resolve) => setTimeout(resolve, 800))
-  isLoading.value = false
-  isSubmitted.value = true
+  submitError.value = ''
+
+  try {
+    const response = await fetch('/api/contact.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        firstName: form.firstName.trim(),
+        lastName: form.lastName.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim(),
+        referral: form.referral,
+        projectDetails: form.projectDetails.trim(),
+        message: form.projectDetails.trim()
+      })
+    })
+
+    const result = await response.json().catch(() => null)
+
+    if (response.ok && result?.success) {
+      isSubmitted.value = true
+    } else {
+      submitError.value = result?.message || (isRtl.value
+        ? 'حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة مرة أخرى أو مراسلتنا مباشرة على elyamani.cfd@gmail.com'
+        : 'An error occurred while sending your message. Please try again or email us at elyamani.cfd@gmail.com')
+    }
+  } catch (error) {
+    submitError.value = isRtl.value
+      ? 'تعذر الاتصال بالخادم. يمكنك مراسلتنا مباشرة على elyamani.cfd@gmail.com'
+      : 'Unable to reach the server. You can email us directly at elyamani.cfd@gmail.com'
+  } finally {
+    isLoading.value = false
+  }
 }
 
 function resetForm() {
@@ -320,6 +372,7 @@ function resetForm() {
   errorKeys.phone = ''
   errorKeys.email = ''
   errorKeys.projectDetails = ''
+  submitError.value = ''
   isSubmitted.value = false
 }
 </script>
@@ -585,5 +638,24 @@ function resetForm() {
 :global([dir="rtl"] .select-arrow) {
   right: auto;
   left: 14px;
+}
+
+.form-submit-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 4px;
+  color: #991b1b;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.form-submit-error svg {
+  flex-shrink: 0;
+  color: #dc2626;
 }
 </style>
