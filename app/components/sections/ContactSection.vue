@@ -66,11 +66,24 @@
             <form
               v-else
               class="contact-form"
-              action="/api/contact.php"
+              action="#"
               method="POST"
               novalidate
               @submit.prevent="handleSubmit"
             >
+              <!-- Honeypot anti-spam field (hidden from legitimate users) -->
+              <div class="form-field-hp" aria-hidden="true" style="display: none; position: absolute; left: -9999px;">
+                <label for="contact_website">Website</label>
+                <input
+                  id="contact_website"
+                  name="website"
+                  v-model="form.website"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
+
               <!-- Name Row (#80:14954, gap 24px) -->
               <div class="form-row">
                 <div class="form-field">
@@ -220,6 +233,7 @@ interface FormData {
   email: string
   referral: string
   projectDetails: string
+  website: string // honeypot
 }
 
 const form = reactive<FormData>({
@@ -228,7 +242,8 @@ const form = reactive<FormData>({
   phone: '',
   email: '',
   referral: 'Facebook , Instagram',
-  projectDetails: ''
+  projectDetails: '',
+  website: ''
 })
 
 const errorKeys = reactive<Record<string, string>>({
@@ -263,6 +278,7 @@ const isSubmitted = ref(false)
 const submitError = ref('')
 
 function validateField(field: keyof FormData): boolean {
+  if (field === 'website') return true
   errorKeys[field] = ''
 
   if (field === 'firstName' && !form.firstName.trim()) {
@@ -319,13 +335,29 @@ function validateAll(): boolean {
 }
 
 async function handleSubmit() {
+  // Prevent duplicate submissions while in progress
+  if (isLoading.value) return
+
   if (!validateAll()) return
 
   isLoading.value = true
   submitError.value = ''
 
+  const config = useRuntimeConfig()
+  const contactApiUrl = (config.public?.contactApiUrl as string | undefined)?.trim()
+  // In development, fallback to local /api/contact.php if no external endpoint is specified
+  const targetUrl = contactApiUrl || (import.meta.dev ? '/api/contact.php' : '')
+
+  if (!targetUrl) {
+    isLoading.value = false
+    submitError.value = isRtl.value
+      ? 'خدمة إرسال النماذج غير مهيأة حالياً. يرجى مراسلتنا مباشرة على elyamani.cfd@gmail.com'
+      : 'Contact form service is not configured. Please contact us directly at elyamani.cfd@gmail.com'
+    return
+  }
+
   try {
-    const response = await fetch('/api/contact.php', {
+    const response = await fetch(targetUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -338,13 +370,23 @@ async function handleSubmit() {
         email: form.email.trim(),
         referral: form.referral,
         projectDetails: form.projectDetails.trim(),
-        message: form.projectDetails.trim()
+        message: form.projectDetails.trim(),
+        website: form.website
       })
     })
 
-    const result = await response.json().catch(() => null)
+    const contentType = response.headers.get('content-type') || ''
+    let result: { success?: boolean; message?: string } | null = null
 
-    if (response.ok && result?.success) {
+    if (contentType.includes('application/json')) {
+      try {
+        result = await response.json()
+      } catch {
+        result = null
+      }
+    }
+
+    if (response.ok && result?.success === true) {
       isSubmitted.value = true
     } else {
       submitError.value = result?.message || (isRtl.value
@@ -367,6 +409,7 @@ function resetForm() {
   form.email = ''
   form.referral = 'Facebook , Instagram'
   form.projectDetails = ''
+  form.website = ''
   errorKeys.firstName = ''
   errorKeys.lastName = ''
   errorKeys.phone = ''

@@ -1,0 +1,9 @@
+{
+  "name": "ezzdhar/elyamani",
+  "description": "ELYMANI Architecture & Execution website contact form handler",
+  "type": "project",
+  "require": {
+    "php": ">=7.4",
+    "phpmailer/phpmailer": "^6.9"
+  }
+}
