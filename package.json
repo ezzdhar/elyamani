@@ -10,7 +10,10 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "node tests/test_frontend_form.js && php tests/test_contact_api.php && php tests/test_http_server.php",
+    "test:frontend": "node tests/test_frontend_form.js",
+    "test:php": "php tests/test_contact_api.php && php tests/test_http_server.php"
   },
   "dependencies": {
     "nuxt": "^4.5.2",
